@@ -1,0 +1,26 @@
+{
+  "name": "taskpilot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "google-cloud-text-to-speech": "^0.3.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.3",
+    "openai": "^4.77.3",
+    "sentiment": "^5.0.2",
+    "socket.io": "^4.8.1",
+    "text-to-speech": "^1.0.10"
+  }
+}
