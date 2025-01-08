@@ -90,11 +90,9 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 ## **📊 Flowchart**
 
-```markdown
-## **📈 Flowchart**
-![image](https://github.com/user-attachments/assets/2694c3bb-e3c2-41b9-a9a2-37ef0d5cce85)
 
-```
+![Figure](architecture.png)
+
 
 
 ## **👨‍💻 Contributors**
