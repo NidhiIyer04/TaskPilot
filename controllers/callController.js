@@ -1,57 +1,28 @@
-const Interaction = require("../models/Schema");
-const { getNLPResponse } = require("../utils/nlp");
-const { analyzeSentiment } = require("../utils/sentiment");
-const { speechToText } = require("../utils/speechToText");
-const { textToSpeech } = require("../utils/textToSpeech");
-const fs = require("fs");
-const path = require("path");
+// controllers/callController.js
+const audioToText = require("../utils/audioToText");
+const processTextWithGemini = require("../utils/processText");
+const textToAudio = require("../utils/textToAudio");
 
-
-
-// Controller function to handle the call
 const handleCall = async (req, res) => {
   const { clientId, audioFilePath } = req.body;
 
   try {
-    // Step 1: Convert Audio to Text (Speech-to-Text)
-    const transcript = await speechToText(audioFilePath);
-    if (!transcript) {
-      return res.status(400).json({
-        message: "Speech-to-text conversion failed. Please check the audio file.",
-      });
-    }
+    // Step 1: Convert Audio to Text
+    const transcript = await audioToText(audioFilePath);
     console.log("Transcript:", transcript);
 
-    // Step 2: Analyze Sentiment
-    const sentimentResult = analyzeSentiment(transcript);
+    // Step 2: Process the Text with Gemini Fine-Tuned Model
+    const responseText = await processTextWithGemini(transcript);
 
-    // Step 3: Process Transcript (NLP Query Handling)
-    const nlpResponse = await getNLPResponse(transcript);
+    // Step 3: Convert the Model Response to Audio
+    const outputAudioPath = `output/${clientId}_${Date.now()}.mp3`;
+    await textToAudio(responseText, outputAudioPath);
 
-    // Step 4: Convert NLP Response to Audio (Text-to-Speech)
-    const outputDir = path.join(__dirname, "../output");
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
-    const outputAudioPath = path.join(outputDir, `${clientId}_${Date.now()}.mp3`);
-    await textToSpeech(nlpResponse, outputAudioPath);
-
-    // Step 5: Save Interaction to Database
-    const interaction = new Interaction({
-      clientId,
-      callTranscript: transcript,
-      sentimentScore: sentimentResult.score,
-      escalated: !nlpResponse,
-    });
-    await interaction.save();
-
-    // Respond with the output paths and analysis
+    // Send the response back to the client
     res.json({
       message: "Call handled successfully",
       transcript,
-      nlpResponse,
-      sentimentScore: sentimentResult.score,
-      sentimentAnalysis: sentimentResult,
+      responseText,
       outputAudioPath,
     });
   } catch (error) {

@@ -1,8 +1,10 @@
+// routes/callRoutes.js
 const express = require("express");
-const router = express.Router();
 const { handleCall } = require("../controllers/callController");
 
-// Route for handling calls
+const router = express.Router();
+
+// Route to handle incoming calls
 router.post("/handle", handleCall);
 
 module.exports = router;
