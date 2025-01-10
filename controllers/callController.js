@@ -6,6 +6,8 @@ const { textToSpeech } = require("../utils/textToSpeech");
 const fs = require("fs");
 const path = require("path");
 
+
+
 // Controller function to handle the call
 const handleCall = async (req, res) => {
   const { clientId, audioFilePath } = req.body;
@@ -13,6 +15,11 @@ const handleCall = async (req, res) => {
   try {
     // Step 1: Convert Audio to Text (Speech-to-Text)
     const transcript = await speechToText(audioFilePath);
+    if (!transcript) {
+      return res.status(400).json({
+        message: "Speech-to-text conversion failed. Please check the audio file.",
+      });
+    }
     console.log("Transcript:", transcript);
 
     // Step 2: Analyze Sentiment

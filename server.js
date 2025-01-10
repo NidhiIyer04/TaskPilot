@@ -5,14 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
-// const dotenv = require("dotenv");
 const callRoutes = require("./routes/callRoutes");
-
-
-// Load environment variables
-// dotenv.config();
-
-console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
 
 // Initialize Express app
 const app = express();
