@@ -1,4 +1,3 @@
-// utils/audioToText.js
 require("dotenv").config();
 const fs = require("fs");
 const Groq = require("groq-sdk");

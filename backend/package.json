@@ -20,7 +20,7 @@
     "google-cloud-text-to-speech": "^0.3.2",
     "groq-sdk": "^0.11.0",
     "mongodb": "^6.12.0",
-    "mongoose": "^8.9.3",
+    "mongoose": "^8.9.4",
     "openai": "^4.77.4",
     "playht": "^0.14.0",
     "sentiment": "^5.0.2",
