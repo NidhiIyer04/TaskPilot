@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const ReportDashboard = () => {
   const [reports, setReports] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/report_gen/extracted_data.json") // Adjust path based on where JSON is stored
+    fetch("/report_gen/extracted_data.json")
       .then(response => response.json())
       .then(data => setReports(data))
       .catch(error => console.error("Error fetching data:", error));
@@ -14,13 +16,45 @@ const ReportDashboard = () => {
   // Search filter function
   const filteredReports = reports.filter(report =>
     Object.values(report).some(value =>
-      value.toLowerCase().includes(search.toLowerCase())
+      value && value.toString().toLowerCase().includes(search.toLowerCase())
     )
   );
+
+  // Export to PDF function
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Insurance Query Reports", 14, 10);
+
+    const tableColumn = ["Caller Name", "Policy Number", "Claim Number", "Due Date", "Query", "Response"];
+    const tableRows = [];
+
+    filteredReports.forEach((report) => {
+      const rowData = [
+        report["Caller Name"] || "N/A",
+        report["Policy Number"] || "N/A",
+        report["Claim Number"] || "N/A",
+        report["Due Date"] || "N/A",
+        report["Query"] || "N/A",
+        report["Response"] || "N/A",
+      ];
+      tableRows.push(rowData);
+    });
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+      styles: { fontSize: 10 },
+    });
+
+    doc.save(`Insurance_Report_${new Date().toISOString().split("T")[0]}.pdf`);
+  };
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Insurance Query Reports</h1>
+
+      {/* Search Bar */}
       <input
         type="text"
         placeholder="Search by Name, Policy Number, or Query..."
@@ -28,7 +62,13 @@ const ReportDashboard = () => {
         onChange={(e) => setSearch(e.target.value)}
         style={{ marginBottom: "10px", padding: "8px", width: "300px" }}
       />
-      <table border="1" width="100%">
+
+      {/* Export PDF Button */}
+      <button onClick={exportToPDF} style={{ marginLeft: "10px", padding: "8px 16px", cursor: "pointer" }}>
+        Export as PDF
+      </button>
+
+      <table border="1" width="100%" style={{ marginTop: "10px" }}>
         <thead>
           <tr>
             <th>Caller Name</th>
@@ -43,12 +83,12 @@ const ReportDashboard = () => {
           {filteredReports.length > 0 ? (
             filteredReports.map((report, index) => (
               <tr key={index}>
-                <td>{report["Caller Name"]}</td>
-                <td>{report["Policy Number"]}</td>
-                <td>{report["Claim Number"]}</td>
-                <td>{report["Due Date"]}</td>
-                <td>{report["Query"]}</td>
-                <td>{report["Response"]}</td>
+                <td>{report["Caller Name"] || "N/A"}</td>
+                <td>{report["Policy Number"] || "N/A"}</td>
+                <td>{report["Claim Number"] || "N/A"}</td>
+                <td>{report["Due Date"] || "N/A"}</td>
+                <td>{report["Query"] || "N/A"}</td>
+                <td>{report["Response"] || "N/A"}</td>
               </tr>
             ))
           ) : (
