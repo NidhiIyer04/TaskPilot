@@ -7,11 +7,16 @@
     "@ffmpeg/util": "^0.12.2",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.8.1",
+<<<<<<< HEAD
     "twilio": "^5.4.1",
+=======
+>>>>>>> 75465d83f2740cc948e858b1118cecdd6183a529
     "web-vitals": "^4.2.4"
   },
   "scripts": {
