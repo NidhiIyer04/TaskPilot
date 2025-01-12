@@ -24,7 +24,7 @@ PlayHT.init({
   apiKey: process.env.PLAYHT_API_KEY,
 });
 
-// 🛠 Function to convert audio to text using Groq API
+// Function to convert audio to text using Groq API
 async function audioToText(audioFilePath) {
   try {
     const transcription = await groq.audio.transcriptions.create({
@@ -41,7 +41,7 @@ async function audioToText(audioFilePath) {
   }
 }
 
-// 🛠 Function to process text using Google Generative AI
+// Function to process text using Google Generative AI
 async function processTextWithGemini(inputText) {
   try {
     const result = await model.generateContent(inputText);
@@ -53,7 +53,7 @@ async function processTextWithGemini(inputText) {
   }
 }
 
-// 🛠 Function to convert text to audio using PlayHT API
+// Function to convert text to audio using PlayHT API
 async function textToAudio(text, outputFilePath) {
   try {
     const stream = await PlayHT.stream(text, { voiceEngine: "PlayDialog" });
@@ -68,7 +68,7 @@ async function textToAudio(text, outputFilePath) {
   }
 }
 
-// 🏁 Main function to handle the entire workflow
+//  Main function to handle the entire workflow
 async function handleAudioFile(audioFilePath, outputAudioPath) {
   try {
     // Step 1: Convert audio to text
@@ -86,7 +86,7 @@ async function handleAudioFile(audioFilePath, outputAudioPath) {
   }
 }
 
-// Example usage
+// Usage
 handleAudioFile("sample_query.mp3", "output_audio.mp3");
 
 module.exports = { audioToText, processTextWithGemini, textToAudio, handleAudioFile };

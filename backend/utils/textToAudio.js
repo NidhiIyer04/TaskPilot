@@ -1,24 +1,27 @@
 // utils/textToAudio.js
-require("dotenv").config();
-const fs = require("fs");
 const PlayHT = require("playht");
+const fs = require("fs");
 
 PlayHT.init({
   userId: process.env.PLAYHT_USER_ID,
   apiKey: process.env.PLAYHT_API_KEY,
 });
 
-async function textToAudio(text, outputFilePath) {
+const textToAudio = async (text, outputPath) => {
   try {
     const stream = await PlayHT.stream(text, { voiceEngine: "PlayDialog" });
-    stream.on("data", (chunk) => {
-      fs.appendFileSync(outputFilePath, chunk);
+    const writeStream = fs.createWriteStream(outputPath);
+
+    stream.pipe(writeStream);
+
+    return new Promise((resolve, reject) => {
+      stream.on("end", () => resolve(outputPath));
+      stream.on("error", reject);
     });
-    return outputFilePath;
   } catch (error) {
-    console.error("Error in Text-to-Speech:", error.message);
+    console.error("❌ Error in Text-to-Speech:", error.message);
     throw error;
   }
-}
+};
 
 module.exports = textToAudio;

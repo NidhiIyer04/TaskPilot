@@ -2,12 +2,12 @@ import React, { useState, useRef } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg"; // Import FFmpeg
 import { fetchFile, toBlobURL } from "@ffmpeg/util"; // Correct utility imports
 
-function App() {
+const AudioRecorder = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioResponseUrl, setAudioResponseUrl] = useState("");
   const mediaRecorderRef = useRef(null);
-  const ffmpegRef = useRef(new FFmpeg()); // Use useRef to store FFmpeg instance
+  const ffmpegRef = useRef(new FFmpeg());
 
   // ✅ Load FFmpeg Core
   const loadFFmpeg = async () => {
@@ -16,7 +16,6 @@ function App() {
 
     ffmpeg.on("log", ({ message }) => console.log("FFmpeg Log:", message));
 
-    // ✅ Load FFmpeg Core and WASM files
     await ffmpeg.load({
       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
       wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, "application/wasm"),
@@ -43,7 +42,7 @@ function App() {
       mediaRecorderRef.current.addEventListener("stop", async () => {
         const webmBlob = new Blob(audioChunks, { type: "audio/webm" });
         const mp3Blob = await convertWebmToMp3(webmBlob);
-        await sendAudioToBackend(mp3Blob); // ✅ Send audio to backend after recording
+        await sendAudioToBackend(mp3Blob);
       });
     } catch (error) {
       console.error("Error accessing microphone:", error);
@@ -68,8 +67,8 @@ function App() {
     return new Blob([mp3Data.buffer], { type: "audio/mp3" });
   };
 
-   // ✅ Send MP3 to Backend
-   const sendAudioToBackend = async (mp3Blob) => {
+  // ✅ Send MP3 to Backend
+  const sendAudioToBackend = async (mp3Blob) => {
     try {
       const formData = new FormData();
       formData.append("audio", mp3Blob, "recording.mp3");
@@ -83,14 +82,14 @@ function App() {
       if (data.audioUrl) {
         const backendAudioUrl = `http://localhost:5000/${data.audioUrl}`;
         setAudioResponseUrl(backendAudioUrl);
-        playAudio(backendAudioUrl); // ✅ Automatically play backend audio
+        playAudio(backendAudioUrl);
       }
     } catch (error) {
       console.error("Error uploading audio:", error);
     }
   };
 
-  // ✅ Function to Play Backend Audio
+  // ✅ Play Backend Audio
   const playAudio = (url) => {
     const audio = new Audio(url);
     audio.play();
@@ -105,18 +104,12 @@ function App() {
           <button onMouseDown={startRecording} onMouseUp={stopRecording}>
             {isRecording ? "Recording..." : "Hold to Record"}
           </button>
-          {/* {audioResponseUrl && (
-            <div>
-              <h2>Your Query :</h2>
-              <audio src={audioResponseUrl} controls autoPlay />
-            </div>
-          )} */}
         </>
       ) : (
         <button onClick={loadFFmpeg}>Share Your Query With Us!</button>
       )}
     </div>
   );
-}
+};
 
-export default App;
+export default AudioRecorder;

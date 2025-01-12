@@ -8,6 +8,7 @@ const groq = new Groq({
 
 async function audioToText(audioFilePath) {
   try {
+    console.log(audioFilePath, "POM POM")
     const transcription = await groq.audio.transcriptions.create({
       file: fs.createReadStream(audioFilePath),
       model: "whisper-large-v3-turbo",
