@@ -79,4 +79,36 @@
     margin-top: 20px;
     text-align: center;
   }
+  .man-talking-gif {
+    width: 300px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .feedback-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .star {
+    font-size: 40px;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s;
+  }
+  
+  .star.filled {
+    color: #ffd700; /* Bright yellow for filled stars */
+  }
+  .feedback-container p {
+    font-size: 18px;
+    margin-top: 15px;
+    color: green;
+  }
   

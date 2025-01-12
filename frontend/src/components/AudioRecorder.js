@@ -11,6 +11,8 @@ const AudioRecorder = () => {
   const [audioResponseUrl, setAudioResponseUrl] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false); 
+  const [showFeedback, setShowFeedback] = useState(false); 
+  const [rating, setRating] = useState(0); 
   const mediaRecorderRef = useRef(null);
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -107,9 +109,13 @@ const AudioRecorder = () => {
     // ✅ Hide the GIF when audio ends
     audio.addEventListener("ended", () => {
       setIsSpeaking(false);
+      setShowFeedback(true);
     });
   };
-
+  // ✅ Handle Star Click
+  const handleStarClick = (index) => {
+    setRating(index + 1);
+  };
 
   return (
     <div className="App">
@@ -132,6 +138,23 @@ const AudioRecorder = () => {
       {isSpeaking && (
         <div className="gif-container">
             <img src={manTalkingGif} alt="Man Talking" className="man-talking-gif" />
+        </div>
+      )}
+      {showFeedback && (
+        <div className="feedback-container">
+          <h2>Please provide feedback</h2>
+          <div className="stars">
+            {[...Array(5)].map((_, index) => (
+              <span
+                key={index}
+                className={`star ${index < rating ? "filled" : ""}`}
+                onClick={() => handleStarClick(index)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+          {rating > 0 && <p>Thanks for the feedback!</p>}
         </div>
       )}
 
