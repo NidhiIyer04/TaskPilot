@@ -51,7 +51,7 @@ To run this project, make sure to set up the following environment variables in 
    node server.js
    ```
 
-5. **Run the frontend for report generation:**
+5. **Start the frontend:**
    ```bash
    cd frontend
    npm start
