@@ -6,7 +6,33 @@ This repository contains the codebase for our AI-driven claims processing automa
 
 ---
 
-## **📋 Project Overview**
+## **How to Run the Project**
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/NidhiIyer04/TaskPilot.git
+   cd TaskPilot
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the backend server:**
+   ```bash
+   npm start
+   ```
+
+4. **Run the frontend:**
+   ```bash
+   cd client
+   npm start
+   ```
+   
+---
+
+## **Project Overview**
 
 This AI-powered system automates routine tasks, prioritizes follow-up calls, performs real-time sentiment analysis during client interactions, and provides a dynamic knowledge base for agents. It also offers a self-service client portal to reduce the need for direct agent intervention.
 
@@ -31,7 +57,7 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 ---
 
-## **🔧 Tech Stack**
+## **Tech Stack**
 
 - **Frontend:** React.js  
 - **Backend:** Node.js with Express.js  
@@ -46,33 +72,7 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 ---
 
-## **💻 How to Run the Project**
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/NidhiIyer04/TaskPilot.git
-   cd TaskPilot
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the backend server:**
-   ```bash
-   npm start
-   ```
-
-4. **Run the frontend:**
-   ```bash
-   cd client
-   npm start
-   ```
-
----
-
-## **🚀 Features in Action**
+## **Features in Action**
 
 ### **1. AI Query Handling Flow:**
 - Client interacts with the AI chatbot.
@@ -88,14 +88,14 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 ---
 
-## **📊 Flowchart**
+## **Flowchart**
 
 
 ![Figure](architecture.png)
 
 
 
-## **👨‍💻 Contributors**
+## **Contributors**
 
 - **Krishna Priya Karumuri** – DevOps and Cloud  
 - **Nagasri Karumuri** – Frontend Developer  
@@ -104,8 +104,4 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 - **Nihitha Bolisetty** – Frontend Developer and UI/UX  
 
 ---
-
-## **📄 License**
-
-This project is licensed under the MIT License.
 
