@@ -23,32 +23,39 @@ const ReportDashboard = () => {
   // Export to PDF function
   const exportToPDF = () => {
     const doc = new jsPDF();
+    doc.setFont("helvetica"); // Consistent font to avoid issues with special characters
     doc.text("Insurance Query Reports", 14, 10);
-
+  
     const tableColumn = ["Caller Name", "Policy Number", "Claim Number", "Due Date", "Query", "Response"];
     const tableRows = [];
-
+  
     filteredReports.forEach((report) => {
       const rowData = [
-        report["Caller Name"] || "N/A",
-        report["Policy Number"] || "N/A",
-        report["Claim Number"] || "N/A",
-        report["Due Date"] || "N/A",
-        report["Query"] || "N/A",
-        report["Response"] || "N/A",
+        (report["Caller Name"] || "N/A").toString().trim(),
+        (report["Policy Number"] || "N/A").toString().trim(),
+        (report["Claim Number"] || "N/A").toString().trim(),
+        (report["Due Date"] || "N/A").toString().trim(),
+        (report["Query"] || "N/A")
+          .replace(/₹/g, "Rs.") // Replaced ₹ with Rs.
+          .replace(/[^\x00-\x7F]/g, ""), // Removed non-ASCII characters
+        (report["Response"] || "N/A")
+          .replace(/₹/g, "Rs.")
+          .replace(/[^\x00-\x7F]/g, ""), 
       ];
       tableRows.push(rowData);
     });
-
+  
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
       startY: 20,
-      styles: { fontSize: 10 },
+      styles: { fontSize: 10, cellPadding: 2 },
     });
-
+  
     doc.save(`Insurance_Report_${new Date().toISOString().split("T")[0]}.pdf`);
   };
+  
+  
 
   return (
     <div style={{ padding: "20px" }}>
