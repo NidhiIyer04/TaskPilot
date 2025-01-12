@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg"; // Import FFmpeg
 import { fetchFile, toBlobURL } from "@ffmpeg/util"; // Correct utility imports
 import LoadingSpinner from "./LoadingSpinner"; 
-
+import "./AudioRecorder.css";
 const AudioRecorder = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
