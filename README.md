@@ -23,7 +23,6 @@ This repository contains the codebase for our AI-driven claims processing automa
    touch .env
    ```
 
-Here’s a **well-formatted section** to add to your **README.md** file with proper Markdown syntax and professional presentation for the **environment variables setup**.
 
 ---
 
