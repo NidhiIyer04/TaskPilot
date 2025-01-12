@@ -18,17 +18,46 @@ This repository contains the codebase for our AI-driven claims processing automa
    ```bash
    npm install
    ```
-
-3. **Start the backend server:**
+3. **set up environment variables**
    ```bash
+   touch .env
+   ```
+
+Here’s a **well-formatted section** to add to your **README.md** file with proper Markdown syntax and professional presentation for the **environment variables setup**.
+
+---
+
+## 🔧 **Environment Variables Setup**
+
+To run this project, make sure to set up the following environment variables in a **`.env`** file in the **root directory** of your project.
+
+### 📋 **Required Environment Variables:**
+
+| **Variable Name**       | **Description**                                       | **How to Get It**                                                       |
+|-------------------------|-------------------------------------------------------|--------------------------------------------------------------------------|
+| `PORT`                  | The port on which your server will run (e.g., `5000`). | You can set it to any available port number, e.g., `5000` or `8080`.      |
+| `MONGO_URI`             | MongoDB connection string.                            | Get it from your **MongoDB Atlas** account or your local MongoDB setup.  |
+| `GROQ_API_KEY`          | API key for **Groq Speech-to-Text API**.              | Sign up at **[Groq Console](https://console.groq.com/keys)** to get the key. |
+| `PLAYHT_USER_ID`        | User ID for **Play.ht API** (Text-to-Speech service). | Access it from **[Play.ht Studio](https://play.ht/studio/api-access)**.  |
+| `PLAYHT_API_KEY`        | API key for **Play.ht API**.                          | Access it from **[Play.ht Studio](https://play.ht/studio/api-access)**.  |
+| `GEMINI_API_KEY`        | API key for **Google Gemini AI API**.                 | Get it from **[Google AI Studio](https://aistudio.google.com/apikey)**.  |
+| `GEMINI_MODEL_ID`       | The **fine-tuned model ID** for Gemini AI.            | Run the provided Python script **`fine_tune.py`** to get your **model ID**. |
+
+---
+
+
+4. **Start the backend server:**
+   ```bash
+   cd backend
+   node server.js
+   ```
+
+5. **Run the frontend for report generation:**
+   ```bash
+   cd frontend
    npm start
    ```
 
-4. **Run the frontend for report generation:**
-   ```bash
-   cd frontend/src
-   npm start
-   ```
    
 ---
 
