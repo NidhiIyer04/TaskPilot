@@ -1,13 +1,11 @@
 import React from "react";
 import './App.css';
-import ReportDashboard from "./report_gen/ReportDashboard"; 
-import AudioRecorder from "./components/AudioRecorder";
+import AppRoutes from "./Routes";
 
 function App() {
   return (
     <div className="App">
-      <AudioRecorder />
-      <ReportDashboard />
+       <AppRoutes />
     </div>
   );
 }
