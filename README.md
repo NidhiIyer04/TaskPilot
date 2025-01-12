@@ -24,9 +24,9 @@ This repository contains the codebase for our AI-driven claims processing automa
    npm start
    ```
 
-4. **Run the frontend:**
+4. **Run the frontend for report generation:**
    ```bash
-   cd client
+   cd frontend/src
    npm start
    ```
    
