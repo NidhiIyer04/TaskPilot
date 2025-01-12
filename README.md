@@ -89,14 +89,15 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 - **Frontend:** React.js  
 - **Backend:** Node.js with Express.js  
-- **Database:** MongoDB (cloud-hosted)  
-- **Speech-to-Text:** TensorFlow / PyTorch  
-- **Sentiment Analysis:** NLP Models  
-- **Chatbot:** OpenAI GPT (integrated via LangChain)  
-- **Authentication:** bcrypt.js and validator.js  
-- **Hosting:** Vercel (Frontend) + AWS Lambda (Backend)  
-- **Real-Time Communication:** Socket.io + Redis  
-- **Scheduling Models:** XGBoost, LightGBM, Scikit-Learn  
+- **Database:** MongoDB Atlas
+- **Speech-to-Text:** Whisper API provided by GROQ [Groq Console](https://console.groq.com/keys) 
+- **Sentiment Analysis:** VADER  
+- **Chatbot:**   Fine Tuned Gemini Model by [Google AI Studio](https://aistudio.google.com/apikey) 
+- **Text-To_Speech:** playHT Provider [Play.ht Studio](https://play.ht/studio/api-access)
+- **Hosting:** Vercel (Frontend) + AWS Lambda (Backend)  (in future)
+- **Real-Time Communication:** Socket.io
+- **Scheduling Models:**  
+- **Miscellaneous:** Multer for file uploads , FFmpeg for converting audio files to .mp3
 
 ---
 
@@ -125,11 +126,11 @@ This AI-powered system automates routine tasks, prioritizes follow-up calls, per
 
 ## **Contributors**
 
-- **Krishna Priya Karumuri** – DevOps and Cloud  
-- **Nagasri Karumuri** – Frontend Developer  
-- **Nidhi Iyer** – AI, Machine Learning, and MLOps  
-- **Khyati Satija** – Backend Developer  
-- **Nihitha Bolisetty** – Frontend Developer and UI/UX  
+- **Krishna Priya Karumuri** – ML Scheduling and Sentiment Analysis 
+- **Nagasri Karumuri** – Frontend Developer, Documentation and Report 
+- **Nidhi Iyer** –  Report Dashboard, Search Functionality
+- **Khyati Satija** – Backend API handling, AI Assistant , Fine tuning of Gemini
+- **Nihitha Bolisetty** – Frontend Developer and UI/UX, Diagrams and Wireframes
 
 ---
 
