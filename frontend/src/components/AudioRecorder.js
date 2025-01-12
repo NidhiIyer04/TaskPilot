@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg"; // Import FFmpeg
 import { fetchFile, toBlobURL } from "@ffmpeg/util"; // Correct utility imports
+import LoadingSpinner from "./LoadingSpinner"; 
 
 const AudioRecorder = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioResponseUrl, setAudioResponseUrl] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false); 
   const mediaRecorderRef = useRef(null);
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -70,8 +72,10 @@ const AudioRecorder = () => {
   // ✅ Send MP3 to Backend
   const sendAudioToBackend = async (mp3Blob) => {
     try {
-      const formData = new FormData();
-      formData.append("audio", mp3Blob, "recording.mp3");
+        
+        setIsProcessing(true); 
+        const formData = new FormData();
+        formData.append("audio", mp3Blob, "recording.mp3");
 
       const response = await fetch("http://localhost:5000/api/process-audio", {
         method: "POST",
@@ -86,6 +90,9 @@ const AudioRecorder = () => {
       }
     } catch (error) {
       console.error("Error uploading audio:", error);
+    }  
+    finally {
+        setIsProcessing(false); 
     }
   };
 
@@ -94,12 +101,14 @@ const AudioRecorder = () => {
     const audio = new Audio(url);
     audio.play();
   };
-
   return (
     <div className="App">
       <h1>TaskPilot AI Voice Assistant</h1>
 
-      {isLoaded ? (
+      {isProcessing ? (
+        // ✅ Show the spinner if processing is happening
+        <LoadingSpinner message="Processing your request... Please wait." />
+      ) : isLoaded ? (
         <>
           <button onMouseDown={startRecording} onMouseUp={stopRecording}>
             {isRecording ? "Recording..." : "Hold to Record"}
@@ -111,5 +120,6 @@ const AudioRecorder = () => {
     </div>
   );
 };
+
 
 export default AudioRecorder;

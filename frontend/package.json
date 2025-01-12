@@ -13,10 +13,7 @@
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.8.1",
-<<<<<<< HEAD
     "twilio": "^5.4.1",
-=======
->>>>>>> 75465d83f2740cc948e858b1118cecdd6183a529
     "web-vitals": "^4.2.4"
   },
   "scripts": {
