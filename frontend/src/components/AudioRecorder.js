@@ -1,13 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg"; // Import FFmpeg
-import { fetchFile, toBlobURL } from "@ffmpeg/util"; // Correct utility imports
-import LoadingSpinner from "./LoadingSpinner"; 
+import { fetchFile, toBlobURL } from "@ffmpeg/util"; 
+import LoadingSpinner from "./LoadingSpinner";
 import "./AudioRecorder.css";
+import manTalkingGif from "./man-talking.gif"; // ✅ Import the GIF
+
 const AudioRecorder = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioResponseUrl, setAudioResponseUrl] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false); 
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false); 
   const mediaRecorderRef = useRef(null);
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -72,16 +75,14 @@ const AudioRecorder = () => {
   // ✅ Send MP3 to Backend
   const sendAudioToBackend = async (mp3Blob) => {
     try {
-        
-        setIsProcessing(true); 
-        const formData = new FormData();
-        formData.append("audio", mp3Blob, "recording.mp3");
+      setIsProcessing(true);
+      const formData = new FormData();
+      formData.append("audio", mp3Blob, "recording.mp3");
 
       const response = await fetch("http://localhost:5000/api/process-audio", {
         method: "POST",
         body: formData,
       });
-
       const data = await response.json();
       if (data.audioUrl) {
         const backendAudioUrl = `http://localhost:5000/${data.audioUrl}`;
@@ -90,17 +91,26 @@ const AudioRecorder = () => {
       }
     } catch (error) {
       console.error("Error uploading audio:", error);
-    }  
-    finally {
-        setIsProcessing(false); 
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  // ✅ Play Backend Audio
-  const playAudio = (url) => {
+ // ✅ Play Backend Audio
+ const playAudio = (url) => {
     const audio = new Audio(url);
     audio.play();
+
+    // ✅ Show the animated GIF when audio starts playing
+    setIsSpeaking(true);
+
+    // ✅ Hide the GIF when audio ends
+    audio.addEventListener("ended", () => {
+      setIsSpeaking(false);
+    });
   };
+
+
   return (
     <div className="App">
       <h1>TaskPilot AI Voice Assistant</h1>
@@ -109,17 +119,24 @@ const AudioRecorder = () => {
         // ✅ Show the spinner if processing is happening
         <LoadingSpinner message="Processing your request... Please wait." />
       ) : isLoaded ? (
-        <>
+        <div className="recorder-container">
           <button onMouseDown={startRecording} onMouseUp={stopRecording}>
             {isRecording ? "Recording..." : "Hold to Record"}
           </button>
-        </>
+        </div>
       ) : (
         <button onClick={loadFFmpeg}>Share Your Query With Us!</button>
       )}
+
+      {/* ✅ Display the animated GIF if the assistant is speaking */}
+      {isSpeaking && (
+        <div className="gif-container">
+            <img src={manTalkingGif} alt="Man Talking" className="man-talking-gif" />
+        </div>
+      )}
+
     </div>
   );
 };
-
 
 export default AudioRecorder;
